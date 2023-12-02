@@ -1,4 +1,4 @@
-FROM rust:1.66-alpine as builder
+FROM rust:1.74-alpine as builder
 
 WORKDIR /usr/src/genuuid
 RUN apk update && apk add --no-cache musl-dev
