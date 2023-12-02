@@ -3,9 +3,10 @@ use axum::{
     http::{header::LOCATION, HeaderMap, HeaderValue, StatusCode},
     response::IntoResponse,
     routing::get,
-    Router, Server,
+    Router,
 };
 use std::{collections::HashMap, sync::Arc};
+use tokio::net::TcpListener;
 use uuid::Uuid;
 
 use crate::count::Count;
@@ -57,7 +58,7 @@ pub async fn server() -> anyhow::Result<()> {
     let base_path = std::env::var("BASE_PATH").unwrap_or_else(|_| "".to_string());
     let port = std::env::var("PORT").unwrap_or_else(|_| "8080".to_string());
     let host = "0.0.0.0";
-    let addr = format!("{}:{}", host, port).parse()?;
+    let addr = format!("{}:{}", host, port);
 
     let state = State {
         base_path: base_path.clone(),
@@ -74,9 +75,8 @@ pub async fn server() -> anyhow::Result<()> {
     }
     .layer(Extension(Arc::new(state)));
 
-    Ok(Server::bind(&addr)
-        .serve(wrapped_router.into_make_service())
-        .await?)
+    let listener = TcpListener::bind(&addr).await?;
+    Ok(axum::serve(listener, wrapped_router.into_make_service()).await?)
 }
 #[cfg(test)]
 mod tests {
