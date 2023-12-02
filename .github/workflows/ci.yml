@@ -18,6 +18,7 @@ jobs:
     permissions:
       contents: read
       id-token: write
+      packages: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -33,7 +34,7 @@ jobs:
           image_url="${region}-docker.pkg.dev/${project_id}/${repository}/${image_name}:${image_tag}"
           echo "IMAGE_URL=${image_url}" >> $GITHUB_ENV
       # Deploy to GitHub Container Registry
-      - uses: VaultVulp/gp-docker-action@1.5.0
+      - uses: VaultVulp/gp-docker-action@1.6.0
         with:
           build-context: .
           dockerfile: Dockerfile
