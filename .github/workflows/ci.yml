@@ -39,7 +39,7 @@ jobs:
           # extract-git-tag: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
           image-name: genuuid
-          image-tag: ${{ secrets.IMAGE_TAG }}
+          image-tag: ${{ env.IMAGE_TAG }}
       # Deploy to Google Cloud Artifact Registry & Cloud Run
       - id: auth
         uses: google-github-actions/auth@v2
