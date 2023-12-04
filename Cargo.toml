@@ -5,8 +5,8 @@ edition = "2018"
 
 [dependencies]
 anyhow = "1.0.75"
-axum = "0.7.1"
-clap = { version = "4.4.10", features = ["derive"] }
+axum = "0.7.2"
+clap = { version = "4.4.11", features = ["derive"] }
 clap_complete = "4.4.4"
 thiserror = "1.0.50"
 tokio = { version = "1", features = ["full"] }
