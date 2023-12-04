@@ -11,6 +11,7 @@ COPY . .
 RUN cargo install --path . --target=x86_64-unknown-linux-musl
 
 FROM scratch
+LABEL org.opencontainers.image.source https://github.com/bouzuya/genuuid
 ENV PORT=8080
 COPY --from=builder /usr/local/cargo/bin/genuuid /usr/local/bin/genuuid
 ENTRYPOINT ["genuuid"]
